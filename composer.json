@@ -1,8 +1,8 @@
 {
   "name": "red-circle/console-process-manager-sonata-admin-bundle",
   "type": "symfony-bundle",
-  "description": "Provides a way to logging all console events",
-  "keywords": ["symfony","console","manager"],
+  "description": "Adding Sonata Admin panel for ConsoleProcessManagerBundle",
+  "keywords": ["sonata","admin","console","manager"],
   "homepage": "https://github.com/RedCirclePL/ConsoleProcessManagerSonataAdminBundle",
   "license": "MIT",
   "authors": [
@@ -12,9 +12,6 @@
     }
   ],
   "require": {
-    "php": ">=5.3.0",
-    "symfony/framework-bundle": ">=2.3",
-    "sensio/framework-extra-bundle": ">=2.1",
     "red-circle/console-process-manager-bundle": "dev-master"
   },
   "autoload": {
