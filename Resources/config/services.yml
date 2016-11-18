@@ -1,14 +1,14 @@
 
 services:
     # sonata admin
-    console_process_manager.admin.process:
+    console_process_manager_sonata_admin.admin.process:
         class: RedCircle\ConsoleProcessManagerSonataAdminBundle\Admin\ProcessAdmin
-        arguments: [~, RedCircle\ConsoleProcessManagerSonataAdminBundle\Entity\Process, ConsoleProcessManagerSonataAdminBundle:ProcessAdmin]
+        arguments: [~, RedCircle\ConsoleProcessManagerBundle\Entity\Process, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Console Process Manager, label: Processes }
 
-    console_process_manager.admin.call:
+    console_process_manager_sonata_admin.admin.call:
         class: RedCircle\ConsoleProcessManagerSonataAdminBundle\Admin\CallAdmin
-        arguments: [~, RedCircle\ConsoleProcessManagerSonataAdminBundle\Entity\Call, ConsoleProcessManagerSonataAdminBundle:CallAdmin]
+        arguments: [~, RedCircle\ConsoleProcessManagerBundle\Entity\Call, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Console Process Manager, label: Calls }

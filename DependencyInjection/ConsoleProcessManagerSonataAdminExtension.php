@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * @author Mateusz Krysztofiak <mateusz@krysztofiak.net>
  */
-class ConsoleProcessManagerExtension extends Extension
+class ConsoleProcessManagerSonataAdminExtension extends Extension
 {
     /**
      * {@inheritDoc}
