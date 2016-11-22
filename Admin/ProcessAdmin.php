@@ -49,23 +49,36 @@ class ProcessAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+
         $listMapper
             ->add('id')
-            ->add('commandName')
-            ->add('command')
+            ->add('command', null, array(
+                'template' => 'ConsoleProcessManagerSonataAdminBundle:CRUD:link_to_calls_list_filtered_by_process_id.html.twig'
+            ))
             ->add('executionCounter')
             ->add('avgExecutionTime', null, array(
                 'template' => 'ConsoleProcessManagerSonataAdminBundle:CRUD:execution_time_field.html.twig'
             ))
-            ->add('createdAt', null, array('format' => 'Y-m-d H:i:s'))
-            ->add('updatedAt', null, array('format' => 'Y-m-d H:i:s'))
-//            ->add('_action', null, array(
-//                'actions' => array(
-//                    'show' => array(),
-//                    'edit' => array(),
-//                    'delete' => array(),
-//                )
-//            ))
+            ->add('callErrorCount', null, array(
+                'template' => 'ConsoleProcessManagerSonataAdminBundle:CRUD:red_label_if_exists.html.twig'
+            ))
+            ->add('callLastErrorTime', null, array('format' => 'Y-m-d H:i:s'))
+            ->add('lastCall.status', null, array(
+                'template' => 'ConsoleProcessManagerSonataAdminBundle:CRUD:call_status_field.html.twig'
+            ))
+            ->add('lastCall.ExecutionTimeProportion', null, array(
+                'template' => 'ConsoleProcessManagerSonataAdminBundle:CRUD:call_execution_time_proportion.html.twig'
+            ))
+            ->add('lastCall.executionTime', null, array(
+                'template' => 'ConsoleProcessManagerSonataAdminBundle:CRUD:execution_time_field.html.twig'
+            ))
+            ->add('lastCall.createdAt', null, array('format' => 'Y-m-d H:i:s'))
+            ->add('lastCall.finishedAt', null, array('format' => 'Y-m-d H:i:s'))
+            ->add('lastCall.output', 'html', array(
+                'truncate' => array(
+                    'preserve' => true
+                )
+            ))
         ;
     }
 

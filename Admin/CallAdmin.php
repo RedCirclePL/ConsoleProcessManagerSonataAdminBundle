@@ -18,6 +18,14 @@ class CallAdmin extends AbstractAdmin
         '_sort_by'    => 'createdAt'
     );
 
+    private $statuses = array(
+        0 => 'In progress',
+        1 => 'Finished',
+        2 => 'Failed',
+        3 => 'Aborted',
+        4 => 'Resolved'
+    );
+
     /**
      * Removing bath actions
      *
@@ -35,16 +43,13 @@ class CallAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('id')
+            ->add('process.id')
             ->add('process.commandName')
             ->add('createdAt')
             ->add('finishedAt')
             ->add('executionTime')
             ->add('status', null, array(), 'choice', array(
-                'choices' => array(
-                    0 => 'In progress',
-                    1 => 'Finished',
-                    2 => 'Failed'
-                ),
+                'choices' => $this->statuses
             ))
             ->add('output')
         ;
@@ -61,16 +66,15 @@ class CallAdmin extends AbstractAdmin
                 'route' => [
                     'name' => 'show',
                 ],
-                'associated_property' => 'command', // property name of entity Country
-                'sortable' => true, // IMPORTANT! make the column sortable
+                'associated_property' => 'command',
+                'sortable' => true,
                 'sort_field_mapping' => array(
-                    'fieldName' => 'command' // property name of entity Country
+                    'fieldName' => 'command'
                 ),
                 'sort_parent_association_mappings' => array(
-                    array('fieldName' => 'process'), // property state of entity City
+                    array('fieldName' => 'process'),
                 )
             ])
-//            ->add('process.commandName', null, ['route' => ['name' => 'show']])
             ->add('status', null, array(
                 'template' => 'ConsoleProcessManagerSonataAdminBundle:CRUD:call_status_field.html.twig'
             ))
@@ -80,9 +84,6 @@ class CallAdmin extends AbstractAdmin
             ->add('executionTime', null, array(
                 'template' => 'ConsoleProcessManagerSonataAdminBundle:CRUD:execution_time_field.html.twig'
             ))
-//            ->add('process.avgExecutionTime', null, array(
-//                'template' => 'ConsoleProcessManagerSonataAdminBundle:CRUD:execution_time_field.html.twig'
-//            ))
             ->add('createdAt', null, array('format' => 'Y-m-d H:i:s'))
             ->add('finishedAt', null, array('format' => 'Y-m-d H:i:s'))
             ->add('output', 'html', array(
@@ -93,8 +94,7 @@ class CallAdmin extends AbstractAdmin
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
-//                    'edit' => array(),
-//                    'delete' => array(),
+                    'edit' => array()
                 )
             ))
         ;
@@ -119,13 +119,29 @@ class CallAdmin extends AbstractAdmin
             ->add('executionTimeToString', null, ['label' => 'Execution Time'])
             ->add('process.avgExecutionTimeToString', null, ['label' => 'Average Process Execution Time'])
             ->add('status', 'choice', array(
-                'choices' => array(
-                    0 => 'In progress',
-                    1 => 'Finished',
-                    2 => 'Failed'
-                ),
+                'choices' => $this->statuses
             ))
             ->add('output')
+        ;
+    }
+
+    /**
+     * @param FormMapper $formMapper
+     */
+    protected function configureFormFields(FormMapper $formMapper)
+    {
+        $formMapper
+            ->add('finishedAt', 'sonata_type_datetime_picker', array(
+                'format' => 'YYYY-MM-DD HH:mm:ss',
+                'dp_side_by_side'       => false,
+                'dp_use_current'        => true,
+                'dp_use_seconds'        => true,
+            ))
+            ->add('status', 'choice', array(
+                'expanded' => true,
+                'choices' => $this->statuses
+            ))
+            ->add('executionTime', 'hidden')
         ;
     }
 }

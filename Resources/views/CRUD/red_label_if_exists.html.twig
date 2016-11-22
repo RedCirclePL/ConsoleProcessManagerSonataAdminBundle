@@ -1,0 +1,13 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+
+    {% set status = 'default' %}
+    {% if value %}
+        {% set status = 'danger' %}
+    {% endif %}
+
+    <div>
+        <span class="label label-{{ status }}">{{ value }}</span><br />
+    </div>
+{% endblock %}

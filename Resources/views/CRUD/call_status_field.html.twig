@@ -8,6 +8,12 @@
         {% elseif value == 2 %}
             {% set status = 'danger' %}
             {% set label = 'Failed' %}
+        {% elseif value == 3 %}
+            {% set status = 'warning' %}
+            {% set label = 'Aborted' %}
+        {% elseif value == 4 %}
+            {% set status = 'success' %}
+            {% set label = 'Resolved' %}
         {% endif %}
 
         <div>

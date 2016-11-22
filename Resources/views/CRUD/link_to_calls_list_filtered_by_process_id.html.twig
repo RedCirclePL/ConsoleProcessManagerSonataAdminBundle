@@ -1,0 +1,7 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    <a href="{{ path('admin_redcircle_consoleprocessmanager_call_list', {
+        'filter[process__id][value]': object.id
+    }) }}">{{ value }}</a>
+{% endblock %}
