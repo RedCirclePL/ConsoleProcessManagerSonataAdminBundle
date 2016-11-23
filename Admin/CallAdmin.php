@@ -75,6 +75,7 @@ class CallAdmin extends AbstractAdmin
                     array('fieldName' => 'process'),
                 )
             ])
+            ->add('consolePid')
             ->add('status', null, array(
                 'template' => 'ConsoleProcessManagerSonataAdminBundle:CRUD:call_status_field.html.twig'
             ))
@@ -130,18 +131,26 @@ class CallAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $finishedAt = $formMapper->getAdmin()->getSubject()->getFinishedAt()
+            ? $formMapper->getAdmin()->getSubject()->getFinishedAt() : new \DateTime();
+
         $formMapper
             ->add('finishedAt', 'sonata_type_datetime_picker', array(
-                'format' => 'YYYY-MM-DD HH:mm:ss',
-                'dp_side_by_side'       => false,
-                'dp_use_current'        => true,
-                'dp_use_seconds'        => true,
-            ))
+                    'format' => 'yyyy-MM-dd HH:mm:ss',
+                    'dp_side_by_side' => false,
+                    'dp_use_current' => true,
+                    'dp_use_seconds' => true,
+                    'data' => $finishedAt
+                )
+            )
             ->add('status', 'choice', array(
                 'expanded' => true,
                 'choices' => $this->statuses
             ))
-            ->add('executionTime', 'hidden')
+            ->add('executionTime', 'integer', array(
+                'empty_data' => ($finishedAt->getTimestamp()
+                    - $formMapper->getAdmin()->getSubject()->getCreatedAt()->getTimestamp()
+            )))
         ;
     }
 }
